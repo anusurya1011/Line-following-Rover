@@ -1,0 +1,76 @@
+#define LEFT_IR D0
+#define RIGHT_IR D8
+
+#define IN1 D2
+#define IN2 D3
+#define ENA D4
+
+#define IN3 D5
+#define IN4 D6
+#define ENB D7
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(LEFT_IR, INPUT);
+  pinMode(RIGHT_IR, INPUT);
+
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(ENA, OUTPUT);
+
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  pinMode(ENB, OUTPUT);
+
+  digitalWrite(ENA, HIGH);
+  digitalWrite(ENB, HIGH);
+}
+
+void loop() {
+  int leftVal = digitalRead(LEFT_IR);
+  int rightVal = digitalRead(RIGHT_IR);
+
+  Serial.print("Left IR: ");
+  Serial.print(leftVal);
+  Serial.print(" | Right IR: ");
+  Serial.println(rightVal);
+
+  if (leftVal == 1 && rightVal == 1) {
+    forward();
+  } else if (leftVal == 0 && rightVal == 1) {
+    turnRight();
+  } else if (leftVal == 1 && rightVal == 0) {
+    turnLeft();
+  } else {
+    stopMotors();
+  }
+}
+
+void forward() {
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+void turnRight() {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+void turnLeft() {
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+}
+
+void stopMotors() {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+}
