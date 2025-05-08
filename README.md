@@ -26,3 +26,4 @@ An autonomous rover designed for agricultural automation using an ESP8266 (NodeM
 
 ## License
 This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
+
